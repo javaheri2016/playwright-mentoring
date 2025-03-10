@@ -1,2 +1,1 @@
-Metoring Project z Kasią
-Dzis jest poniedzialek
+nowa tresc a co tam
