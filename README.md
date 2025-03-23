@@ -1,1 +1,1 @@
-I want to have some conflicts
+I want to have some conflicts XXX
