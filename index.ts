@@ -7,3 +7,4 @@ import * as pw from 'playwright';
   await page.screenshot({ path: 'photo/screenshot.png' });
   await browser.close();
 })();
+
