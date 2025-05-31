@@ -1,9 +1,17 @@
 import { test, expect } from '@playwright/test';
 
-test('sprawdza tytuł strony javaheri.pl', async ({ page }) => {
-  await page.goto('https://javaheri.pl/');
-  await expect(page).toHaveTitle('Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management');
-});
+
+const pages =
+  [
+    { button: 'Home', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
+    { button: 'About', title: 'About – Katarzyna Javaheri-Szpak / QA Engineer' },
+    { button: 'Contact', title: 'Contact – Katarzyna Javaheri-Szpak / QA Engineer' },
+    { button: 'Blog', title: 'Blog – Katarzyna Javaheri-Szpak / QA Engineer' },
+    { button: ' PL', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
+    { button: ' PT', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
+
+  ];
+
 
 test('sprawdza istnienie logo (klasa)', async ({ page }) => {
   await page.goto('https://javaheri.pl/');
@@ -11,25 +19,17 @@ test('sprawdza istnienie logo (klasa)', async ({ page }) => {
   await expect(logo).toHaveClass(/custom-logo/);
 });
 
-
 test('sprawdza istnienie logo (widocznosc)', async ({ page }) => {
   await page.goto('https://javaheri.pl/');
   const logo = page.locator('img[alt="Katarzyna Javaheri-Szpak / QA Engineer"]');
   await expect(logo).toBeVisible();
 });
 
-const pages =
-  [
-    { url: 'https://javaheri.pl/', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
-    { url: 'https://javaheri.pl/about/', title: 'About – Katarzyna Javaheri-Szpak / QA Engineer' },
-    { url: 'https://javaheri.pl/contact/', title: 'Contact – Katarzyna Javaheri-Szpak / QA Engineer' },
-    { url: 'https://javaheri.pl/blog/', title: 'Blog – Katarzyna Javaheri-Szpak / QA Engineer' },
-    { url: 'https://javaheri.pl/pl/who-am-i-polski/', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
-    { url: 'https://javaheri.pl/pt/who-am-i-portugues/', title: 'Katarzyna Javaheri-Szpak / QA Engineer – QA / TestOps / Python / Test Management' },
-];
 
-for (const {url, title} of pages){
-  test (`sprawdza tytul na kazdej stronie ${url} `, async ({ page }) => {
-    await page.goto(url);
+for (const {button, title } of pages){
+  test (`weryfikacja tytul  po klinięciu w: ${button}`, async ({ page }) => {
+    await page.goto('https://javaheri.pl/');
+    await page.click(`span.wp-block-navigation-item__label:has-text("${button}")`);
     await expect(page).toHaveTitle(title);
-  })};
+  })
+};
