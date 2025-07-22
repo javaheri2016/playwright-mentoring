@@ -27,7 +27,7 @@ test('sprawdza istnienie logo (widocznosc)', async ({ page }) => {
 
 
 for (const {button, title } of pages){
-  test (`weryfikacja tytul  po klinięciu w: ${button}`, async ({ page }) => {
+  test (`weryfikacja tytul po klinięciu w: ${button}`, async ({ page }) => {
     await page.goto('https://javaheri.pl/');
     await page.click(`span.wp-block-navigation-item__label:has-text("${button}")`);
     await expect(page).toHaveTitle(title);
