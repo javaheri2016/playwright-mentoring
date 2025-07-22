@@ -14,7 +14,7 @@ test('wprowadzenie poprawnego kodu na stronie ', async ({ page }) => {
   const downloadLink=page.locator('#download-link')
   await expect(downloadLink).toBeVisible ();
   const textContent = await downloadLink.textContent();
-console.log('Zawartość linku:', textContent);
+  console.log('Zawartość linku:', textContent);
 });
 
 
@@ -26,9 +26,8 @@ test('wprowadzenie kodu z małych liter na stronie ', async ({ page }) => {
   await submitButton.click();
   const downloadLink=page.locator('#download-link')
   await expect(downloadLink).toContainText("❌ Invalid code.")
-
-const textContent = await downloadLink.textContent();
-console.log('Zawartość linku:', textContent);
+  const textContent = await downloadLink.textContent();
+  console.log('Zawartość linku:', textContent);
 });
 
 
@@ -40,7 +39,6 @@ test('wprowadzenie blednego kodu na stronie ', async ({ page }) => {
   await submitButton.click();
   const downloadLink=page.locator('#download-link')
   await expect(downloadLink).toContainText("❌ Invalid code.")
-
-const textContent = await downloadLink.textContent();
-console.log('Zawartość linku:', textContent);
+  const textContent = await downloadLink.textContent();
+  console.log('Zawartość linku:', textContent);
 });
