@@ -1,28 +1,30 @@
-import { test, expect, Page } from '@playwright/test';
-import { generateRandomPassword } from '../utils/passwordGenerator.ts';
+import { test, expect, Page, Locator, TestInfo } from '@playwright/test';
 
 const validCode = 'PORTU2025';
-const randomPassword = generateRandomPassword(6);
 const invalidCode ='aaaaaabbbb';
+var passgen = require('passgen');
+var ranPassword = passgen.create(12);
+
+test.beforeEach(async ({ page }) => {
+  await page.goto('https://portugate.pt/audio/');
+});
 
 async function submitCode(page: Page, code: string) {
-  await page.goto('https://portugate.pt/audio/');
   const input = page.locator('#audio-code');
   await input.fill(code);
-  await page.screenshot({path: 'photo/screenshot.png'});
+  await page.screenshot({path: `photo/screenshot_${code}.png`});
   const submitButton = page.locator('#audio-form > p > button');
   await submitButton.click();
   return page.locator('#download-link');
 }
 
 async function goToForm(page: Page) {
-  await page.goto('https://portugate.pt/audio/');
   const input = page.locator('#audio-code');
   const submitButton = page.locator('#audio-form > p > button');
   return { input, submitButton };
 } 
 
-async function assertContainsAndLog (locator, expectedText, testInfo) {
+async function assertContainsAndLog (locator: Locator, expectedText: string, testInfo: TestInfo) {
   await expect(locator).toContainText(expectedText)
   const textContent = await locator.textContent();
   (testInfo as any).downloadText = textContent;
@@ -38,12 +40,12 @@ test('Submitting a valid code', async ({page}, testInfo) => {
 test('Submitting a code in lowercase', async ({ page }, testInfo) => {
   const downloadLink = await submitCode(page, invalidCode.toLowerCase());
   await assertContainsAndLog(downloadLink,'Invalid code', testInfo);
-  
 });
 
 test('Submitting an invalid code', async ({ page }, testInfo) => {
-  const downloadLink = await submitCode(page, randomPassword);
+  const downloadLink = await submitCode(page, ranPassword);
   await assertContainsAndLog(downloadLink,'Invalid code',testInfo);
+  console.log(ranPassword);
 });
 
 test('Empty input field', async ({ page }) => {
@@ -55,6 +57,7 @@ test('Empty input field', async ({ page }) => {
   await expect(downloadLink).not.toBeVisible();
 });
 
+// After each test
 test.afterEach(async ({}, testInfo) => {
   const text = (testInfo as any).downloadText;
 
