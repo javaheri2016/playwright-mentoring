@@ -4,6 +4,9 @@ const validCode = 'PORTU2025';
 const invalidCode ='aaaaaabbbb';
 var passgen = require('passgen');
 var ranPassword = passgen.create(12);
+var dateFns =require ('date-fns');
+var currentDate = new Date( );
+var formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://portugate.pt/audio/');
@@ -12,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 async function submitCode(page: Page, code: string) {
   const input = page.locator('#audio-code');
   await input.fill(code);
-  await page.screenshot({path: `photo/screenshot_${code}.png`});
+  await page.screenshot({path: `photo/screenshot_${formattedDate}.png`});
   const submitButton = page.locator('#audio-form > p > button');
   await submitButton.click();
   return page.locator('#download-link');
@@ -37,10 +40,12 @@ test('Submitting a valid code', async ({page}, testInfo) => {
   (testInfo as any).downloadText = textContent;
 });
 
+
 test('Submitting a code in lowercase', async ({ page }, testInfo) => {
   const downloadLink = await submitCode(page, invalidCode.toLowerCase());
   await assertContainsAndLog(downloadLink,'Invalid code', testInfo);
 });
+
 
 test('Submitting an invalid code', async ({ page }, testInfo) => {
   const downloadLink = await submitCode(page, ranPassword);
