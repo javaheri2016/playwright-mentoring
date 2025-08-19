@@ -10,6 +10,7 @@ var formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://portugate.pt/audio/');
+  await page.click(`button.cky-btn-accept`);
 });
 
 async function submitCode(page: Page, code: string) {
