@@ -2,11 +2,11 @@ import { test, expect, Page, Locator, TestInfo } from '@playwright/test';
 
 const validCode = 'PORTU2025';
 const invalidCode ='aaaaaabbbb';
-var passgen = require('passgen');
-var ranPassword = passgen.create(12);
-var dateFns =require ('date-fns');
-var currentDate = new Date( );
-var formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
+let passgen = require('passgen');
+let ranPassword = passgen.create(12);
+let dateFns =require ('date-fns');
+let currentDate = new Date( );
+let formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://portugate.pt/audio/');
