@@ -7,19 +7,19 @@ const validCode = 'PORTU2025';
 const invalidCode ='aaaaaabbbb';
 
 // Library used to generate strong random passwords/strings.
-var passgen = require('passgen');
+let passgen = require('passgen');
 
 // Randomly generated string used to simulate unpredictable invalid input.
-var ranPassword = passgen.create(12);
+let ranPassword = passgen.create(12);
 
 // Used to format the date for screenshots/logs.
-var dateFns =require ('date-fns');
+let dateFns =require ('date-fns');
 
 // Captures the current date and time at runtime.
-var currentDate = new Date( );
+let currentDate = new Date( );
 
 // Formats the timestamp to create unique screenshot filenames.
-var formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
+let formattedDate = dateFns.format(currentDate, 'yyyy-MM-dd_HH-mm-ss')
 
 // Navigates to the site and accepts the cookie banner before each test run.
 test.beforeEach(async ({ page }) => {
